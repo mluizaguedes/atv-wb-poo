@@ -1,0 +1,30 @@
+
+.page-title {
+    text-align: center;
+    margin-top: 55px;
+    margin-bottom: 55px;
+    color: #13293D;
+  }
+
+  .top {
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+  }
+
+    .left {
+      flex: 1;
+      padding: 0 20px;
+      border-radius: 6px;
+      position: relative;
+    }
+
+    .right {
+        flex: 2;
+      }
+
+.component-title {
+    margin-left: 15px;
+    color: #13293D;
+}
+  
