@@ -67,8 +67,10 @@ const RegistroCompras: React.FC<Props> = ({ tema, clientes, atualizarClientes, v
     };
 
     return (
+        <div>
+            <h3 className="page-title"> World Beauty </h3>
         <div className={tema}>
-            <h2zz>Registrar Compras</h2>
+            <h4>Registrar Compras</h4>
             <div className="input-field">
                 <input
                     type="text"
@@ -95,6 +97,7 @@ const RegistroCompras: React.FC<Props> = ({ tema, clientes, atualizarClientes, v
                 </>
             )}
             <button onClick={voltar} className="btn">Voltar</button>
+        </div>
         </div>
     );
 }
