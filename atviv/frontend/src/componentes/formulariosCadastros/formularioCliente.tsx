@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 type Props = {
-    tema: string
+    tema: string;
 }
 
 type NovoCliente = {
@@ -24,29 +24,61 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
             telefone: ""
         });
     const [mensagemSucesso, setMensagemSucesso] = useState<string | null>(null);
+    const [mensagemErro, setMensagemErro] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setNovoCliente(prevState => ({
             ...prevState,
             [name]: value
-        }));
+        })); 
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("Novo cliente:", novoCliente);
+        if (!novoCliente.nome || !novoCliente.cpf || !novoCliente.rg || !novoCliente.telefone) {
+            setMensagemErro('Todos os campos obrigatórios devem ser preenchidos.');
+            setMensagemSucesso(null);
+            return;
+        }
 
-        setMensagemSucesso("Cliente cadastrado com sucesso!");
+        setIsSubmitting(true);
 
-        setNovoCliente({
-            nome: "",
-            nomeSocial: "",
-            genero: "",
-            cpf: "",
-            rg: "",
-            telefone: ""
-        });
+        try {
+            const response = await fetch('http://localhost:32832/cliente/cadastrar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(novoCliente),
+            });
+
+            if (response.ok) {
+                setMensagemSucesso('Cliente cadastrado com sucesso!');
+                console.log("Cliente:", novoCliente.nome)
+                setMensagemErro(null);
+                setNovoCliente({
+                    nome: "",
+                    nomeSocial: "",
+                    genero: "",
+                    cpf: "",
+                    rg: "",
+                    telefone: ""
+                });
+            } else {
+                const errorData = await response.json();
+                console.error('Erro ao cadastrar cliente:', errorData);
+                setMensagemErro(`Erro ao cadastrar cliente: ${errorData.message}`);
+                setMensagemSucesso(null);
+            }
+        } catch (error) {
+            console.error('Erro na requisição:', error);
+            setMensagemErro('Erro ao cadastrar cliente.');
+            setMensagemSucesso(null);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     let estiloBotao = `btn waves-effect waves-light ${tema}`;
@@ -140,6 +172,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                         </div>
                     </div>
                     {mensagemSucesso && <p>{mensagemSucesso}</p>}
+                    {mensagemErro && <p className="error-message">{mensagemErro}</p>}
                 </form>
             </div>
         </div>

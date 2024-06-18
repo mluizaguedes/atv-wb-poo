@@ -8,14 +8,18 @@ import ListaProduto from "./listas/listaProduto";
 import ListaServico from "./listas/listaServico";
 import RegistroCompras from "./compras/registroCompras";
 import TopLista from "./topLista/topLista";
+import Endereco from "../modelo/endereco";
 
 type ClienteDados = {
     nome: string;
+    sobreNome: string;
     nomeSocial: string;
     genero: string;
     cpf: string;
     rgs: string[];
+    email: string;
     dataCadastro: string;
+    endereco: Endereco;
     telefones: string[];
     produtosConsumidos: string[];
     servicosConsumidos: string[];

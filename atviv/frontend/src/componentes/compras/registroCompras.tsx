@@ -2,14 +2,18 @@
 import React, { useState, useEffect } from "react";
 import 'materialize-css/dist/css/materialize.min.css'
 import '../componentes.css';
+import Endereco from "../../modelo/endereco";
 
 type Cliente = {
     nome: string;
+    sobreNome: string;
     nomeSocial: string;
     genero: string;
     cpf: string;
     rgs: string[];
+    email: string;
     dataCadastro: string;
+    endereco: Endereco;
     telefones: string[];
     produtosConsumidos: string[];
     servicosConsumidos: string[];

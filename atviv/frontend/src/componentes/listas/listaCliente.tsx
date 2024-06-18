@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import 'materialize-css/dist/css/materialize.min.css'
 import '../componentes.css';
 import RegistroCompras from "../compras/registroCompras";
+import { Cliente } from "../../modelo/cliente";
+import Endereco from "../../modelo/endereco";
 
 type Props = {
     tema: string
 }
 
-type Cliente = {
+/* type Cliente = {
     nome: string;
     nomeSocial: string;
     genero: string;
@@ -18,12 +20,15 @@ type Cliente = {
     telefones: string[];
     produtosConsumidos: string[];
     servicosConsumidos: string[];
-};
+}; */
 
 const ListaCliente: React.FC<Props> = ({ tema }) => {
     const [clientes, setClientes] = useState<Cliente[]>([
         {
             nome: "Maria Luiza Guedes da Silva",
+            sobreNome: "",
+            email: "",
+            endereco: new Endereco("São José dos Campos", "São Paulo"),
             nomeSocial: "Maria",
             genero: "Feminino",
             cpf: "123.456.789-00",
@@ -36,6 +41,9 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
         {
             nome: "Mateus Vieira Silva Pereira",
             nomeSocial: "Mateus",
+            sobreNome: "",
+            email: "",
+            endereco: new Endereco("São José dos Campos", "São Paulo"),
             genero: "Masculino",
             cpf: "987.654.321-00",
             rgs: ["98.765.432-1"],
@@ -46,6 +54,9 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
         },
         {
             nome: "Giovanna Carvalho Xavier",
+            sobreNome: "",
+            email: "",
+            endereco: new Endereco("São José dos Campos", "São Paulo"),
             nomeSocial: "Giovanna",
             genero: "Feminino",
             cpf: "111.222.333-44",
@@ -57,6 +68,9 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
         },
         {
             nome: "Junior Daniel da Silva",
+            sobreNome: "",
+            email: "",
+            endereco: new Endereco("São José dos Campos", "São Paulo"),
             nomeSocial: "Junior",
             genero: "Masculino",
             cpf: "555.666.777-88",
@@ -68,6 +82,9 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
         },
         {
             nome: "Jessica Ariany Freire",
+            sobreNome: "",
+            email: "",
+            endereco: new Endereco("São José dos Campos", "São Paulo"),
             nomeSocial: "Jessica",
             genero: "Feminino",
             cpf: "999.888.777-66",
@@ -79,6 +96,9 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
         },
         {
             nome: "William Ferreira Azevedo",
+            sobreNome: "",
+            email: "",
+            endereco: new Endereco("São José dos Campos", "São Paulo"),
             nomeSocial: "William",
             genero: "Masculino",
             cpf: "222.333.444-55",
@@ -89,18 +109,10 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
             servicosConsumidos: ["Serviço F"]
         },
         {
-            nome: "Sofia Matos Lessa",
-            nomeSocial: "Sofia",
-            genero: "Feminino",
-            cpf: "333.444.555-66",
-            rgs: ["33.444.555-6"],
-            dataCadastro: "07/07/2015",
-            telefones: ["(71) 98765-4321"],
-            produtosConsumidos: ["Produto M", "Produto N"],
-            servicosConsumidos: ["Serviço G", "Serviço H"]
-        },
-        {
             nome: "Felipe Henrique Castro",
+            sobreNome: "",
+            email: "",
+            endereco: new Endereco("São José dos Campos", "São Paulo"),
             nomeSocial: "Felipe Castro",
             genero: "Masculino",
             cpf: "444.555.666-77",
@@ -112,6 +124,9 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
         },
         {
             nome: "Mariana Gomes Barros",
+            sobreNome: "",
+            email: "",
+            endereco: new Endereco("São José dos Campos", "São Paulo"),
             nomeSocial: "Mariana Barros",
             genero: "Feminino",
             cpf: "555.666.777-88",
@@ -123,6 +138,9 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
         },
         {
             nome: "Rafael Alves Pinto",
+            sobreNome: "",
+            email: "",
+            endereco: new Endereco("São José dos Campos", "São Paulo"),
             nomeSocial: "Rafael Pinto",
             genero: "Masculino",
             cpf: "666.777.888-99",
