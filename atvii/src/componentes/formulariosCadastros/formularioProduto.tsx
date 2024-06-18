@@ -100,13 +100,13 @@ export default class FormularioCadastroProduto extends Component<props, State> {
                             </div>
                             <div className="row">
                                 <div className="col s12">
-                                    <button className={estiloBotao} type="submit" name="action">Cadastrar
+                                <button className="button" type="submit" name="action">Cadastrar
                                         <i className="material-icons right">send</i>
                                     </button>
+                                    {mensagemSucesso && <p>{mensagemSucesso}</p>}
                                 </div>
                             </div>
                         </div>
-                        {mensagemSucesso && <p>{mensagemSucesso}</p>}
                     </form>
                 </div>
             </div>

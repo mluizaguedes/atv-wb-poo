@@ -47,7 +47,7 @@ export default class RegistroCompras extends Component<props, State> {
     handleCPFChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({
             cpfInput: event.target.value,
-            clienteSelecionado: null, 
+            clienteSelecionado: null,
         });
     };
 
@@ -95,34 +95,37 @@ export default class RegistroCompras extends Component<props, State> {
         const { tema, clientes } = this.props;
         const { novaCompra, clienteSelecionado, cpfInput } = this.state;
         return (
-            <div className={tema}>
-                <h2>Registrar Compras</h2>
-                <div className="input-field">
-                    <input
-                        type="text"
-                        placeholder="CPF do Cliente"
-                        value={cpfInput}
-                        onChange={this.handleCPFChange}
-                    />
-                    <button onClick={this.handleBuscarCliente} className="btn">Buscar Cliente</button>
+            <div>
+                <h3 className="page-title"> World Beauty </h3>
+                <div className="selecionado">
+                    <h4>Registrar Compras</h4>
+                    <div className="input-field">
+                        <input
+                            type="text"
+                            placeholder="CPF do Cliente"
+                            value={cpfInput}
+                            onChange={this.handleCPFChange}
+                        />
+                        <button onClick={this.handleBuscarCliente} className="btn">Buscar Cliente</button>
+                    </div>
+                    {clienteSelecionado && (
+                        <>
+                            <div className="input-field">
+                                <label>Cliente: {clienteSelecionado.nome}</label>
+                            </div>
+                            <div className="input-field">
+                                <input type="text" name="tipo" value={novaCompra.tipo} onChange={this.handleCompraChange} />
+                                <label className="active">Tipo (Produto/Serviço)</label>
+                            </div>
+                            <div className="input-field">
+                                <input type="text" name="nome" value={novaCompra.nome} onChange={this.handleCompraChange} />
+                                <label className="active">Nome</label>
+                            </div>
+                            <button onClick={this.adicionarCompra} className="btn">Adicionar Compra</button>
+                        </>
+                    )}
+                    <button onClick={this.props.voltar} className="btn">Voltar</button>
                 </div>
-                {clienteSelecionado && (
-                    <>
-                        <div className="input-field">
-                            <label>Cliente: {clienteSelecionado.nome}</label>
-                        </div>
-                        <div className="input-field">
-                            <input type="text" name="tipo" value={novaCompra.tipo} onChange={this.handleCompraChange} />
-                            <label className="active">Tipo (Produto/Serviço)</label>
-                        </div>
-                        <div className="input-field">
-                            <input type="text" name="nome" value={novaCompra.nome} onChange={this.handleCompraChange} />
-                            <label className="active">Nome</label>
-                        </div>
-                        <button onClick={this.adicionarCompra} className="btn">Adicionar Compra</button>
-                    </>
-                )}
-                <button onClick={this.props.voltar} className="btn">Voltar</button>
             </div>
         );
     }

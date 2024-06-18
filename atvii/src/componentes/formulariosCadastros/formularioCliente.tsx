@@ -4,15 +4,17 @@ type props = {
     tema: string
 }
 
+type Cliente = {
+    nome: string;
+    nomeSocial: string;
+    genero: string;
+    cpf: string;
+    rgs: string[];
+    telefones: string[];
+};
+
 type State = {
-    novoCliente: {
-        nome: string;
-        nomeSocial: string;
-        genero: string;
-        cpf: string;
-        rg: string;
-        telefone: string;
-    };
+    novoCliente: Cliente;
     mensagemSucesso: string | null;
 };
 
@@ -24,20 +26,53 @@ export default class FormularioCadastroCliente extends Component<props, State> {
             nomeSocial: "",
             genero: "",
             cpf: "",
-            rg: "",
-            telefone: ""
+            rgs: [""],
+            telefones: [""]
         },
         mensagemSucesso: null
     };
 
-    handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        this.setState(prevState => ({
-            novoCliente: {
-                ...prevState.novoCliente,
-                [name]: value
-            }
-        }));
+    handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number, field: keyof Cliente) => {
+        const { value } = event.target;
+        if (field === "rgs" || field === "telefones") {
+            const updatedArray = [...this.state.novoCliente[field]];
+            updatedArray[index] = value;
+            this.setState(prevState => ({
+                novoCliente: {
+                    ...prevState.novoCliente,
+                    [field]: updatedArray
+                }
+            }));
+        } else {
+            this.setState(prevState => ({
+                novoCliente: {
+                    ...prevState.novoCliente,
+                    [field]: value
+                }
+            }));
+        }
+    };
+
+    handleAddField = (field: keyof Cliente) => {
+        if (field === "rgs" || field === "telefones") {
+            this.setState(prevState => ({
+                novoCliente: {
+                    ...prevState.novoCliente,
+                    [field]: [...prevState.novoCliente[field], ""]
+                }
+            }));
+        }
+    };
+
+    handleRemoveField = (index: number, field: keyof Cliente) => {
+        if (field === "rgs" || field === "telefones") {
+            this.setState(prevState => ({
+                novoCliente: {
+                    ...prevState.novoCliente,
+                    [field]: prevState.novoCliente[field].filter((_: string, i: number) => i !== index)
+                }
+            }));
+        }
     };
 
     handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -52,8 +87,8 @@ export default class FormularioCadastroCliente extends Component<props, State> {
                 nomeSocial: "",
                 genero: "",
                 cpf: "",
-                rg: "",
-                telefone: ""
+                rgs: [""],
+                telefones: [""]
             }
         });
     };
@@ -78,7 +113,7 @@ export default class FormularioCadastroCliente extends Component<props, State> {
                                         className="validate"
                                         name="nome"
                                         value={novoCliente.nome}
-                                        onChange={this.handleChange}
+                                        onChange={(e) => this.handleChange(e, 0, "nome")}
                                     />
                                     <label htmlFor="nome">Nome completo</label>
                                 </div>
@@ -89,7 +124,7 @@ export default class FormularioCadastroCliente extends Component<props, State> {
                                         className="validate"
                                         name="nomeSocial"
                                         value={novoCliente.nomeSocial}
-                                        onChange={this.handleChange}
+                                        onChange={(e) => this.handleChange(e, 0, "nomeSocial")}
                                     />
                                     <label htmlFor="nome_social">Nome social</label>
                                 </div>
@@ -102,7 +137,7 @@ export default class FormularioCadastroCliente extends Component<props, State> {
                                         className="validate"
                                         name="genero"
                                         value={novoCliente.genero}
-                                        onChange={this.handleChange}
+                                        onChange={(e) => this.handleChange(e, 0, "genero")}
                                     />
                                     <label htmlFor="genero">Gênero</label>
                                 </div>
@@ -113,44 +148,54 @@ export default class FormularioCadastroCliente extends Component<props, State> {
                                         className="validate"
                                         name="cpf"
                                         value={novoCliente.cpf}
-                                        onChange={this.handleChange}
+                                        onChange={(e) => this.handleChange(e, 0, "cpf")}
                                     />
                                     <label htmlFor="cpf">CPF</label>
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="input-field col s6">
-                                    <input
-                                        id="rg"
-                                        type="text"
-                                        className="validate"
-                                        name="rg"
-                                        value={novoCliente.rg}
-                                        onChange={this.handleChange}
-                                    />
-                                    <label htmlFor="rg">RG</label>
-                                </div>
-                                <div className="input-field col s6">
-                                    <input
-                                        id="telefone"
-                                        type="text"
-                                        className="validate"
-                                        name="telefone"
-                                        value={novoCliente.telefone}
-                                        onChange={this.handleChange}
-                                    />
-                                    <label htmlFor="telefone">Telefone</label>
-                                </div>
+                                {novoCliente.rgs.map((rg, index) => (
+                                    <div className="input-field col s6" key={index}>
+                                        <input
+                                            id={`rg-${index}`}
+                                            type="text"
+                                            className="validate"
+                                            name={`rg-${index}`}
+                                            value={rg}
+                                            onChange={(e) => this.handleChange(e, index, "rgs")}
+                                        />
+                                        <label htmlFor={`rg-${index}`}>RG {index + 1}</label>
+                                        <button type="button" className="btn red" onClick={() => this.handleRemoveField(index, "rgs")}>Remover</button>
+                                    </div>
+                                ))}
+                                <button type="button" className="btn" onClick={() => this.handleAddField("rgs")}>Adicionar RG</button>
                             </div>
                             <div className="row">
-                                <div className="col s12">
-                                    <button className={estiloBotao} type="submit" name="action">Cadastrar
+                                {novoCliente.telefones.map((telefone, index) => (
+                                    <div className="input-field col s6" key={index}>
+                                        <input
+                                            id={`telefone-${index}`}
+                                            type="text"
+                                            className="validate"
+                                            name={`telefone-${index}`}
+                                            value={telefone}
+                                            onChange={(e) => this.handleChange(e, index, "telefones")}
+                                        />
+                                        <label htmlFor={`telefone-${index}`}>Telefone {index + 1}</label>
+                                        <button type="button" className="btn red" onClick={() => this.handleRemoveField(index, "telefones")}>Remover</button>
+                                    </div>
+                                ))}
+                                <button type="button" className="btn" onClick={() => this.handleAddField("telefones")}>Adicionar Telefone</button>
+                            </div>
+                            <div className="row">
+                                <div className="col-s12">
+                                    <button className="button" type="submit" name="action">Cadastrar
                                         <i className="material-icons right">send</i>
                                     </button>
+                                    {mensagemSucesso && <p>{mensagemSucesso}</p>}
                                 </div>
                             </div>
                         </div>
-                        {mensagemSucesso && <p>{mensagemSucesso}</p>}
                     </form>
                 </div>
             </div>

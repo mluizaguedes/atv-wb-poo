@@ -40,10 +40,10 @@ export default class BarraNavegacao extends Component<props> {
         let estilo = `${this.props.tema}` // classe CSS com base no tema recebido nas props
         return (
             <>
-                <nav className={estilo}>
-                    <div className="nav-wrapper">
+                <nav className="nav">
                         <a className="brand-logo"> WB </a>
                         <a data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>  {/* icon menu lateral em telas pequenas */}
+                    <div className="nav-wrapper">
                         <ul className="right hide-on-med-and-down">
                             {this.gerarListaBotoes()} {/* chama método para gerar os botões na barra de navegação */}
                         </ul>

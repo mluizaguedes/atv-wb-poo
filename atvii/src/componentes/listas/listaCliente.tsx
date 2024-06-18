@@ -36,77 +36,77 @@ export default class ListaCliente extends Component<props, State> {
         mostrarRegistroConsumo: false,
         clientes: [
             {
-                nome: "Maria Luiza Guedes da Silva",
+                nome: "Maria Luiza",
                 nomeSocial: "Maria",
                 genero: "Feminino",
                 cpf: "123.456.789-00",
-                rgs: ["12.345.678-9"],
+                rgs: ["12345678-9/SP"],
                 dataCadastro: "01/01/2020",
                 telefones: ["(12) 98765-4321"],
                 produtosConsumidos: ["Produto A", "Produto B"],
                 servicosConsumidos: ["Serviço X", "Serviço Y"]
             },
             {
-                nome: "Mateus Vieira Silva Pereira",
+                nome: "Mateus Vieira",
                 nomeSocial: "Mateus",
                 genero: "Masculino",
                 cpf: "987.654.321-00",
-                rgs: ["98.765.432-1"],
+                rgs: ["98765432-1/PR"],
                 dataCadastro: "02/04/2022",
                 telefones: ["(11) 87654-3210"],
                 produtosConsumidos: ["Produto C", "Produto D"],
                 servicosConsumidos: ["Serviço Z"]
             },
             {
-                nome: "Giovanna Carvalho Xavier",
+                nome: "Giovanna Xavier",
                 nomeSocial: "Giovanna",
                 genero: "Feminino",
                 cpf: "111.222.333-44",
-                rgs: ["11.222.333-4"],
+                rgs: ["11222333-4/SP"],
                 dataCadastro: "01/01/2020",
                 telefones: ["(12) 98765-4321"],
                 produtosConsumidos: ["Produto E", "Produto F"],
                 servicosConsumidos: ["Serviço A", "Serviço B"]
             },
             {
-                nome: "Junior Daniel da Silva",
-                nomeSocial: "Junior",
+                nome: "César Reis",
+                nomeSocial: "César",
                 genero: "Masculino",
                 cpf: "555.666.777-88",
-                rgs: ["55.666.777-8"],
+                rgs: ["55666777-8/SP"],
                 dataCadastro: "04/04/2024",
                 telefones: ["(21) 87654-3210"],
                 produtosConsumidos: ["Produto G", "Produto H"],
                 servicosConsumidos: ["Serviço C"]
             },
             {
-                nome: "Jessica Ariany Freire",
+                nome: "Jessica Freire",
                 nomeSocial: "Jessica",
                 genero: "Feminino",
                 cpf: "999.888.777-66",
-                rgs: ["99.888.777-6"],
+                rgs: ["99888777-6/SP"],
                 dataCadastro: "05/05/2017",
                 telefones: ["(51) 98765-4321"],
                 produtosConsumidos: ["Produto I", "Produto J"],
                 servicosConsumidos: ["Serviço D", "Serviço E"]
             },
             {
-                nome: "William Ferreira Azevedo",
+                nome: "William Azevedo",
                 nomeSocial: "William",
                 genero: "Masculino",
                 cpf: "222.333.444-55",
-                rgs: ["22.333.444-5"],
+                rgs: ["22333444-5/SP"],
                 dataCadastro: "06/06/2016",
                 telefones: ["(61) 87654-3210"],
                 produtosConsumidos: ["Produto K", "Produto L"],
                 servicosConsumidos: ["Serviço F"]
             },
             {
-                nome: "Sofia Matos Lessa",
-                nomeSocial: "Sofia",
+                nome: "Julia Leão",
+                nomeSocial: "Julia",
                 genero: "Feminino",
                 cpf: "333.444.555-66",
-                rgs: ["33.444.555-6"],
+                rgs: ["33444555-6/SP"],
                 dataCadastro: "07/07/2015",
                 telefones: ["(71) 98765-4321"],
                 produtosConsumidos: ["Produto M", "Produto N"],
@@ -117,7 +117,7 @@ export default class ListaCliente extends Component<props, State> {
                 nomeSocial: "Felipe Castro",
                 genero: "Masculino",
                 cpf: "444.555.666-77",
-                rgs: ["44.555.666-7"],
+                rgs: ["44555666-7/SP"],
                 dataCadastro: "08/08/2014",
                 telefones: ["(81) 87654-3210"],
                 produtosConsumidos: ["Produto O", "Produto P"],
@@ -128,7 +128,7 @@ export default class ListaCliente extends Component<props, State> {
                 nomeSocial: "Mariana Barros",
                 genero: "Feminino",
                 cpf: "555.666.777-88",
-                rgs: ["55.666.777-8"],
+                rgs: ["55666777-8/SP"],
                 dataCadastro: "09/09/2013",
                 telefones: ["(91) 98765-4321"],
                 produtosConsumidos: ["Produto Q", "Produto R"],
@@ -139,7 +139,7 @@ export default class ListaCliente extends Component<props, State> {
                 nomeSocial: "Rafael Pinto",
                 genero: "Masculino",
                 cpf: "666.777.888-99",
-                rgs: ["66.777.888-9"],
+                rgs: ["66777888-9/SP"],
                 dataCadastro: "10/10/2012",
                 telefones: ["(11) 87654-3210"],
                 produtosConsumidos: ["Produto S", "Produto T"],
@@ -190,6 +190,68 @@ export default class ListaCliente extends Component<props, State> {
         }));
     };
 
+    handleRGChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+        const newRGs = [...this.state.clienteEditado!.rgs];
+        newRGs[index] = event.target.value;
+        this.setState(prevState => ({
+            clienteEditado: {
+                ...prevState.clienteEditado!,
+                rgs: newRGs
+            }
+        }));
+    };
+
+    addRG = () => {
+        this.setState(prevState => ({
+            clienteEditado: {
+                ...prevState.clienteEditado!,
+                rgs: [...prevState.clienteEditado!.rgs, ""]
+            }
+        }));
+    };
+
+    removeRG = (index: number) => {
+        const newRGs = [...this.state.clienteEditado!.rgs];
+        newRGs.splice(index, 1);
+        this.setState(prevState => ({
+            clienteEditado: {
+                ...prevState.clienteEditado!,
+                rgs: newRGs
+            }
+        }));
+    };
+
+    handleTelefoneChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+        const newTelefones = [...this.state.clienteEditado!.telefones];
+        newTelefones[index] = event.target.value;
+        this.setState(prevState => ({
+            clienteEditado: {
+                ...prevState.clienteEditado!,
+                telefones: newTelefones
+            }
+        }));
+    };
+
+    addTelefone = () => {
+        this.setState(prevState => ({
+            clienteEditado: {
+                ...prevState.clienteEditado!,
+                telefones: [...prevState.clienteEditado!.telefones, ""]
+            }
+        }));
+    };
+
+    removeTelefone = (index: number) => {
+        const newTelefones = [...this.state.clienteEditado!.telefones];
+        newTelefones.splice(index, 1);
+        this.setState(prevState => ({
+            clienteEditado: {
+                ...prevState.clienteEditado!,
+                telefones: newTelefones
+            }
+        }));
+    };
+
     mostrarRegistroConsumo = () => {
         this.setState({ mostrarRegistroConsumo: true });
     };
@@ -228,7 +290,7 @@ export default class ListaCliente extends Component<props, State> {
                             </div>
                             <div className="table.responsive-table">
                                 {clienteSelecionado && !editando && (
-                                    <div className={estilo}>
+                                    <div className="selecionado">
                                         <h3>{clienteSelecionado.nome}</h3>
                                         <p><strong>Nome Social:</strong> {clienteSelecionado.nomeSocial}</p>
                                         <p><strong>Sexo:</strong> {clienteSelecionado.genero}</p>
@@ -241,12 +303,11 @@ export default class ListaCliente extends Component<props, State> {
                                         <button onClick={this.fechar} className="btn">Fechar</button>
                                         <button onClick={this.editar} className="btn">Editar</button>
                                         <button onClick={this.excluir} className="btn red">Excluir Cliente</button>
-                                        <button onClick={this.mostrarRegistroConsumo} className="btn">Registrar Consumo</button>
                                     </div>
                                 )}
 
                                 {clienteSelecionado && editando && (
-                                    <div className={estilo}>
+                                        <div className="selecionado">
                                         <h3>Editar Cliente</h3>
                                         <div className="input-field">
                                             <input type="text" name="nome" value={clienteEditado!.nome} onChange={this.handleChange} />
@@ -265,28 +326,28 @@ export default class ListaCliente extends Component<props, State> {
                                             <label className="active">CPF</label>
                                         </div>
                                         <div className="input-field">
-                                            <textarea name="rgs" className="materialize-textarea" value={clienteEditado!.rgs.join(", ")} onChange={this.handleChange}></textarea>
                                             <label className="active">RG(s)</label>
+                                            {clienteEditado!.rgs.map((rg, index) => (
+                                                <div key={index}>
+                                                    <input type="text" value={rg} onChange={(e) => this.handleRGChange(index, e)} />
+                                                    <button onClick={() => this.removeRG(index)} className="btn-remover">Excluir RG</button>
+                                                </div>
+                                            ))}
+                                            <button onClick={this.addRG} className="btn-adicionar">Adicionar RG</button>
                                         </div>
                                         <div className="input-field">
-                                            <input type="text" name="dataCadastro" value={clienteEditado!.dataCadastro} onChange={this.handleChange} />
-                                            <label className="active">Data de Cadastro</label>
-                                        </div>
-                                        <div className="input-field">
-                                            <textarea name="telefones" className="materialize-textarea" value={clienteEditado!.telefones.join(", ")} onChange={this.handleChange}></textarea>
                                             <label className="active">Telefone(s)</label>
-                                        </div>
-                                        <div className="input-field">
-                                            <textarea name="produtosConsumidos" className="materialize-textarea" value={clienteEditado!.produtosConsumidos.join(", ")} onChange={this.handleChange}></textarea>
-                                            <label className="active">Produtos Consumidos</label>
-                                        </div>
-                                        <div className="input-field">
-                                            <textarea name="servicosConsumidos" className="materialize-textarea" value={clienteEditado!.servicosConsumidos.join(", ")} onChange={this.handleChange}></textarea>
-                                            <label className="active">Serviços Consumidos</label>
+                                            {clienteEditado!.telefones.map((telefone, index) => (
+                                                <div key={index}>
+                                                    <input type="text" value={telefone} onChange={(e) => this.handleTelefoneChange(index, e)} />
+                                                    <button onClick={() => this.removeTelefone(index)} className="btn-remover">Excluir Telefone</button>
+                                                </div>
+                                            ))}
+                                            <button onClick={this.addTelefone} className="btn-adicionar">Adicionar Telefone</button>
                                         </div>
                                         <button onClick={this.salvar} className="btn">Salvar</button>
                                         <button onClick={this.fechar} className="btn">Fechar</button>
-                                    </div>
+                                        </div>
                                 )}
                             </div>
                         </div>

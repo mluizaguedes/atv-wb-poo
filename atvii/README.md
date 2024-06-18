@@ -38,5 +38,3 @@ Desenvolver uma interface gráfica (GUI) que funcione tanto em navegadores de de
     ```
 
 O projeto será executado em http://localhost:3000.
-
-<p align="center"> Desenvolvido por Maria Luiza </p>

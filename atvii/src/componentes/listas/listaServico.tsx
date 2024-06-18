@@ -91,7 +91,7 @@ export default class ListaServico extends Component<props, State> {
             <div>
                 <h3 className="page-title"> World Beauty </h3>
                 <div>
-                    <h3>Serviços</h3>
+                    <h4 className="component-title">Serviços</h4>
                     <div className="left">
                         <div className="collection">
                             {this.servicos.map((servico) => (
@@ -107,7 +107,7 @@ export default class ListaServico extends Component<props, State> {
                     </div>
                     <div className="table.responsive-table">
                         {servicoSelecionado && !editando && (
-                            <div className={estilo}>
+                            <div className="selecionado">
                                 <h3>{servicoSelecionado.nome}</h3>
                                 <p><strong>ID:</strong> {servicoSelecionado.id}</p>
                                 <p><strong>Preço:</strong> {servicoSelecionado.valor}</p>
@@ -118,7 +118,7 @@ export default class ListaServico extends Component<props, State> {
                         )}
 
                         {servicoSelecionado && editando && (
-                            <div className={estilo}>
+                            <div className="selecionado">
                                 <h3>Editar Cliente</h3>
                                 <div className="input-field">
                                     <input type="text" name="nome" value={servicoEditado!.nome} onChange={this.handleChange} />
