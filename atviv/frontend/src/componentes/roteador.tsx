@@ -7,7 +7,6 @@ import ListaCliente from "./listas/listaCliente";
 import ListaProduto from "./listas/listaProduto";
 import ListaServico from "./listas/listaServico";
 import RegistroCompras from "./compras/registroCompras";
-import TopLista from "./topLista/topLista";
 import Endereco from "../modelo/endereco";
 
 type ClienteDados = {
@@ -156,7 +155,7 @@ const Roteador: React.FC = () => {
 
     let barraNavegacao = (
         <BarraNavegacao seletorView={selecionarView} tema="purple lighten-4" 
-        botoes={['Cadastrar Cliente', 'Cadastrar Produto', 'Cadastrar Serviço', 'Clientes', 'Produtos', 'Serviços', 'Compras', 'Top Clientes']} 
+        botoes={['Cadastrar Cliente', 'Cadastrar Produto', 'Cadastrar Serviço', 'Clientes', 'Produtos', 'Serviços', 'Compras']} 
         />
     );
     let tema = "purple lighten-4";
@@ -178,7 +177,6 @@ const Roteador: React.FC = () => {
                         voltar={voltar}
                     />
                 )}
-                {tela === 'Top Clientes' && <TopLista tema={tema} lista={topClientes} />}
             </>
         );
 
