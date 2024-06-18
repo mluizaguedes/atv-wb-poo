@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.wb.wbbackend.entidades.Cliente;
 import com.wb.wbbackend.entidades.Telefone;
+import com.wb.wbbackend.entidades.Endereco;
 import com.wb.wbbackend.verificadores.VerificadorEnderecoNulo;
 import com.wb.wbbackend.verificadores.VerificadorStringNula;
 import com.wb.wbbackend.verificadores.VerificadorTelefoneNulo;

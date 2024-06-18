@@ -31,8 +31,8 @@ const BarraNavegacao: React.FC<Props> = ({ seletorView, tema, botoes }) => {
 
     return (
             <>
-                <nav className={tema}>
-                    <div className="nav-wrapper">
+                <nav className="selecionado">
+                    <div className="nav">
                         <a className="brand-logo"> WB </a>
                         <a data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>  {/* icon menu lateral em telas pequenas */}
                         <ul className="right hide-on-med-and-down">
