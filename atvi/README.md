@@ -28,7 +28,7 @@
 2. Navegue até o diretório do projeto:
     
     ```bash
-    cd atvi-wb
+    cd atvi
     
     ```
     
