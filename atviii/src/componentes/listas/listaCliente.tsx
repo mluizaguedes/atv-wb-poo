@@ -23,77 +23,77 @@ type Cliente = {
 const ListaCliente: React.FC<Props> = ({ tema }) => {
     const [clientes, setClientes] = useState<Cliente[]>([
         {
-            nome: "Maria Luiza Guedes da Silva",
+            nome: "Maria Luiza",
             nomeSocial: "Maria",
             genero: "Feminino",
             cpf: "123.456.789-00",
-            rgs: ["12.345.678-9"],
+            rgs: ["12345678-9/SP"],
             dataCadastro: "01/01/2020",
             telefones: ["(12) 98765-4321"],
             produtosConsumidos: ["Produto A", "Produto B"],
             servicosConsumidos: ["Serviço X", "Serviço Y"]
         },
         {
-            nome: "Mateus Vieira Silva Pereira",
+            nome: "Mateus Vieira",
             nomeSocial: "Mateus",
             genero: "Masculino",
             cpf: "987.654.321-00",
-            rgs: ["98.765.432-1"],
+            rgs: ["98765432-1/PR"],
             dataCadastro: "02/04/2022",
             telefones: ["(11) 87654-3210"],
             produtosConsumidos: ["Produto C", "Produto D"],
             servicosConsumidos: ["Serviço Z"]
         },
         {
-            nome: "Giovanna Carvalho Xavier",
+            nome: "Giovanna Xavier",
             nomeSocial: "Giovanna",
             genero: "Feminino",
             cpf: "111.222.333-44",
-            rgs: ["11.222.333-4"],
+            rgs: ["11222333-4/SP"],
             dataCadastro: "01/01/2020",
             telefones: ["(12) 98765-4321"],
             produtosConsumidos: ["Produto E", "Produto F"],
             servicosConsumidos: ["Serviço A", "Serviço B"]
         },
         {
-            nome: "Junior Daniel da Silva",
-            nomeSocial: "Junior",
+            nome: "César Reis",
+            nomeSocial: "César",
             genero: "Masculino",
             cpf: "555.666.777-88",
-            rgs: ["55.666.777-8"],
+            rgs: ["55666777-8/SP"],
             dataCadastro: "04/04/2024",
             telefones: ["(21) 87654-3210"],
             produtosConsumidos: ["Produto G", "Produto H"],
             servicosConsumidos: ["Serviço C"]
         },
         {
-            nome: "Jessica Ariany Freire",
+            nome: "Jessica Freire",
             nomeSocial: "Jessica",
             genero: "Feminino",
             cpf: "999.888.777-66",
-            rgs: ["99.888.777-6"],
+            rgs: ["99888777-6/SP"],
             dataCadastro: "05/05/2017",
             telefones: ["(51) 98765-4321"],
             produtosConsumidos: ["Produto I", "Produto J"],
             servicosConsumidos: ["Serviço D", "Serviço E"]
         },
         {
-            nome: "William Ferreira Azevedo",
+            nome: "William Azevedo",
             nomeSocial: "William",
             genero: "Masculino",
             cpf: "222.333.444-55",
-            rgs: ["22.333.444-5"],
+            rgs: ["22333444-5/SP"],
             dataCadastro: "06/06/2016",
             telefones: ["(61) 87654-3210"],
             produtosConsumidos: ["Produto K", "Produto L"],
             servicosConsumidos: ["Serviço F"]
         },
         {
-            nome: "Sofia Matos Lessa",
-            nomeSocial: "Sofia",
+            nome: "Julia Leão",
+            nomeSocial: "Julia",
             genero: "Feminino",
             cpf: "333.444.555-66",
-            rgs: ["33.444.555-6"],
+            rgs: ["33444555-6/SP"],
             dataCadastro: "07/07/2015",
             telefones: ["(71) 98765-4321"],
             produtosConsumidos: ["Produto M", "Produto N"],
@@ -104,7 +104,7 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
             nomeSocial: "Felipe Castro",
             genero: "Masculino",
             cpf: "444.555.666-77",
-            rgs: ["44.555.666-7"],
+            rgs: ["44555666-7/SP"],
             dataCadastro: "08/08/2014",
             telefones: ["(81) 87654-3210"],
             produtosConsumidos: ["Produto O", "Produto P"],
@@ -115,7 +115,7 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
             nomeSocial: "Mariana Barros",
             genero: "Feminino",
             cpf: "555.666.777-88",
-            rgs: ["55.666.777-8"],
+            rgs: ["55666777-8/SP"],
             dataCadastro: "09/09/2013",
             telefones: ["(91) 98765-4321"],
             produtosConsumidos: ["Produto Q", "Produto R"],
@@ -126,7 +126,7 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
             nomeSocial: "Rafael Pinto",
             genero: "Masculino",
             cpf: "666.777.888-99",
-            rgs: ["66.777.888-9"],
+            rgs: ["66777888-9/SP"],
             dataCadastro: "10/10/2012",
             telefones: ["(11) 87654-3210"],
             produtosConsumidos: ["Produto S", "Produto T"],
@@ -139,21 +139,21 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
     const [clienteEditado, setClienteEditado] = useState<Cliente | null>(null);
     const [mostrarRegistroConsumo, setMostrarRegistroConsumo] = useState(false);
 
-    const clienteSelecionadoHandler = (cliente: Cliente) => {
+    const handleSelectCliente = (cliente: Cliente) => {
         setClienteSelecionado(cliente);
         setEditando(false);
         setClienteEditado(cliente);
     };
 
-    const fechar = () => {
+    const handleClose = () => {
         setClienteSelecionado(null);
     };
 
-    const editar = () => {
+    const handleEdit = () => {
         setEditando(true);
     };
 
-    const excluir = () => {
+    const handleDelete = () => {
         if (clienteSelecionado) {
             const novoArrayClientes = clientes.filter(cliente => cliente.cpf !== clienteSelecionado.cpf);
             setClientes(novoArrayClientes);
@@ -161,7 +161,7 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
         }
     };
 
-    const salvar = () => {
+    const handleSave = () => {
         if (clienteSelecionado && clienteEditado) {
             const index = clientes.findIndex(cliente => cliente.cpf === clienteSelecionado.cpf);
             if (index !== -1) {
@@ -176,25 +176,73 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
-        setClienteEditado(prevClienteEditado => ({
-            ...prevClienteEditado!,
+        setClienteEditado(prevState => ({
+            ...prevState!,
             [name]: value
         }));
     };
 
-    const mostrarRegistroConsumoHandler = () => {
+    const handleRGChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+        const newRGs = [...clienteEditado!.rgs];
+        newRGs[index] = event.target.value;
+        setClienteEditado(prevState => ({
+            ...prevState!,
+            rgs: newRGs
+        }));
+    };
+
+    const addRG = () => {
+        setClienteEditado(prevState => ({
+            ...prevState!,
+            rgs: [...prevState!.rgs, ""]
+        }));
+    };
+
+    const removeRG = (index: number) => {
+        const newRGs = [...clienteEditado!.rgs];
+        newRGs.splice(index, 1);
+        setClienteEditado(prevState => ({
+            ...prevState!,
+            rgs: newRGs
+        }));
+    };
+
+    const handleTelefoneChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+        const newTelefones = [...clienteEditado!.telefones];
+        newTelefones[index] = event.target.value;
+        setClienteEditado(prevState => ({
+            ...prevState!,
+            telefones: newTelefones
+        }));
+    };
+
+    const addTelefone = () => {
+        setClienteEditado(prevState => ({
+            ...prevState!,
+            telefones: [...prevState!.telefones, ""]
+        }));
+    };
+
+    const removeTelefone = (index: number) => {
+        const newTelefones = [...clienteEditado!.telefones];
+        newTelefones.splice(index, 1);
+        setClienteEditado(prevState => ({
+            ...prevState!,
+            telefones: newTelefones
+        }));
+    };
+
+    const handleMostrarRegistroConsumo = () => {
         setMostrarRegistroConsumo(true);
     };
 
-    const voltar = () => {
+    const handleVoltar = () => {
         setMostrarRegistroConsumo(false);
     };
 
-    const atualizarClientes = (clientesAtualizados: Cliente[]) => {
-        setClientes(clientesAtualizados);
+    const atualizarClientes = (clientes: Cliente[]) => {
+        setClientes(clientes);
     };
-
-    let estilo = `collection-item active ${tema}`;
 
     return (
         <div>
@@ -209,7 +257,7 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
                                     <a
                                         key={cliente.nome}
                                         className="collection-item"
-                                        onClick={() => clienteSelecionadoHandler(cliente)}
+                                        onClick={() => handleSelectCliente(cliente)}
                                     >
                                         {cliente.nome}
                                     </a>
@@ -218,7 +266,7 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
                         </div>
                         <div className="table.responsive-table">
                             {clienteSelecionado && !editando && (
-                                <div className={estilo}>
+                                <div className="selecionado">
                                     <h3>{clienteSelecionado.nome}</h3>
                                     <p><strong>Nome Social:</strong> {clienteSelecionado.nomeSocial}</p>
                                     <p><strong>Sexo:</strong> {clienteSelecionado.genero}</p>
@@ -228,15 +276,14 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
                                     <p><strong>Telefone(s):</strong> {clienteSelecionado.telefones.join(", ")}</p>
                                     <p><strong>Produtos Consumidos:</strong> {clienteSelecionado.produtosConsumidos.join(", ")}</p>
                                     <p><strong>Serviços Consumidos:</strong> {clienteSelecionado.servicosConsumidos.join(", ")}</p>
-                                    <button onClick={fechar} className="btn">Fechar</button>
-                                    <button onClick={editar} className="btn">Editar</button>
-                                    <button onClick={excluir} className="btn red">Excluir Cliente</button>
-                                    <button onClick={mostrarRegistroConsumoHandler} className="btn">Registrar Consumo</button>
+                                    <button onClick={handleClose} className="btn">Fechar</button>
+                                    <button onClick={handleEdit} className="btn">Editar</button>
+                                    <button onClick={handleDelete} className="btn red">Excluir Cliente</button>
                                 </div>
                             )}
 
                             {clienteSelecionado && editando && (
-                                <div className={estilo}>
+                                <div className="selecionado">
                                     <h3>Editar Cliente</h3>
                                     <div className="input-field">
                                         <input type="text" name="nome" value={clienteEditado!.nome} onChange={handleChange} />
@@ -255,27 +302,27 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
                                         <label className="active">CPF</label>
                                     </div>
                                     <div className="input-field">
-                                        <textarea name="rgs" className="materialize-textarea" value={clienteEditado!.rgs.join(", ")} onChange={handleChange}></textarea>
                                         <label className="active">RG(s)</label>
+                                        {clienteEditado!.rgs.map((rg, index) => (
+                                            <div key={index}>
+                                                <input type="text" value={rg} onChange={(e) => handleRGChange(index, e)} />
+                                                <button onClick={() => removeRG(index)} className="btn-remover">Excluir RG</button>
+                                            </div>
+                                        ))}
+                                        <button onClick={addRG} className="btn-adicionar">Adicionar RG</button>
                                     </div>
                                     <div className="input-field">
-                                        <input type="text" name="dataCadastro" value={clienteEditado!.dataCadastro} onChange={handleChange} />
-                                        <label className="active">Data de Cadastro</label>
-                                    </div>
-                                    <div className="input-field">
-                                        <textarea name="telefones" className="materialize-textarea" value={clienteEditado!.telefones.join(", ")} onChange={handleChange}></textarea>
                                         <label className="active">Telefone(s)</label>
+                                        {clienteEditado!.telefones.map((telefone, index) => (
+                                            <div key={index}>
+                                                <input type="text" value={telefone} onChange={(e) => handleTelefoneChange(index, e)} />
+                                                <button onClick={() => removeTelefone(index)} className="btn-remover">Excluir Telefone</button>
+                                            </div>
+                                        ))}
+                                        <button onClick={addTelefone} className="btn-adicionar">Adicionar Telefone</button>
                                     </div>
-                                    <div className="input-field">
-                                        <textarea name="produtosConsumidos" className="materialize-textarea" value={clienteEditado!.produtosConsumidos.join(", ")} onChange={handleChange}></textarea>
-                                        <label className="active">Produtos Consumidos</label>
-                                    </div>
-                                    <div className="input-field">
-                                        <textarea name="servicosConsumidos" className="materialize-textarea" value={clienteEditado!.servicosConsumidos.join(", ")} onChange={handleChange}></textarea>
-                                        <label className="active">Serviços Consumidos</label>
-                                    </div>
-                                    <button onClick={salvar} className="btn">Salvar</button>
-                                    <button onClick={fechar} className="btn">Fechar</button>
+                                    <button onClick={handleSave} className="btn">Salvar</button>
+                                    <button onClick={handleClose} className="btn">Fechar</button>
                                 </div>
                             )}
                         </div>
@@ -286,11 +333,11 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
                     tema={tema}
                     clientes={clientes}
                     atualizarClientes={atualizarClientes}
-                    voltar={voltar}
+                    voltar={handleVoltar}
                 />
             )}
         </div>
     );
-}
+};
 
 export default ListaCliente;

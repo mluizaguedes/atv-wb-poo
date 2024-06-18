@@ -35,7 +35,7 @@ const ListaServico: React.FC<Props> = ({ tema }) => {
     const [servicoEditado, setServicoEditado] = useState<Servico | null>(null);
 
 
-    const servicoSelecionadoHandler = (servico: Servico) => {
+    const selecionarServico = (servico: Servico) => {
         setServicoSelecionado(servico);
         setEditando(false);
         setServicoEditado(servico);
@@ -43,6 +43,7 @@ const ListaServico: React.FC<Props> = ({ tema }) => {
 
     const fechar = () => {
         setServicoSelecionado(null);
+        setEditando(false);
     };
 
     const editar = () => {
@@ -51,47 +52,41 @@ const ListaServico: React.FC<Props> = ({ tema }) => {
 
     const excluir = () => {
         if (servicoSelecionado) {
-            const novoArrayServico = servicos.filter(servico => servico.id !== servicoSelecionado.id);
-            setServicos(novoArrayServico);
+            setServicos(servicos.filter(servico => servico.id !== servicoSelecionado.id));
             setServicoSelecionado(null);
         }
     };
 
     const salvar = () => {
         if (servicoSelecionado && servicoEditado) {
-            const index = servicos.findIndex(servico => servico.id === servicoSelecionado.id);
-            if (index !== -1) {
-                const novosServicos = [...servicos];
-                novosServicos[index] = servicoEditado;
-                setServicos(novosServicos);
-                setServicoSelecionado(servicoEditado);
-                setEditando(false);
-            }
+            setServicos(servicos.map(servico => servico.id === servicoSelecionado.id ? servicoEditado : servico));
+            setServicoSelecionado(servicoEditado);
+            setEditando(false);
         }
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = event.target;
-        setServicoEditado(prevServicoEditado => ({
-            ...prevServicoEditado!,
-            [name]: value
-        }));
+        if (servicoEditado) {
+            setServicoEditado({
+                ...servicoEditado,
+                [name]: value
+            });
+        }
     };
-
-    let estilo = `collection-item active ${tema}`;
 
     return (
             <div>
                 <h3 className="page-title"> World Beauty </h3>
                 <div>
-                    <h4>Serviços</h4>
+                    <h4 className="component-title">Serviços</h4>
                     <div className="left">
                         <div className="collection">
                             {servicos.map((servico) => (
                                 <a
                                     key={servico.nome}
                                     className="collection-item"
-                                    onClick={() => servicoSelecionadoHandler(servico)}
+                                    onClick={() => selecionarServico(servico)}
                                 >
                                     {servico.nome}
                                 </a>
@@ -100,7 +95,7 @@ const ListaServico: React.FC<Props> = ({ tema }) => {
                     </div>
                     <div className="table.responsive-table">
                         {servicoSelecionado && !editando && (
-                            <div className={estilo}>
+                            <div className="selecionado">
                                 <h3>{servicoSelecionado.nome}</h3>
                                 <p><strong>ID:</strong> {servicoSelecionado.id}</p>
                                 <p><strong>Preço:</strong> {servicoSelecionado.valor}</p>
@@ -111,7 +106,7 @@ const ListaServico: React.FC<Props> = ({ tema }) => {
                         )}
 
                         {servicoSelecionado && editando && (
-                            <div className={estilo}>
+                            <div className="selecionado">
                                 <h3>Editar Cliente</h3>
                                 <div className="input-field">
                                     <input type="text" name="nome" value={servicoEditado!.nome} onChange={handleChange} />
@@ -130,4 +125,5 @@ const ListaServico: React.FC<Props> = ({ tema }) => {
             </div>
         );
     }
+    
 export default ListaServico;

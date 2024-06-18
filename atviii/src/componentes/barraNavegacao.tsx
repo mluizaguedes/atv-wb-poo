@@ -30,20 +30,22 @@ const BarraNavegacao: React.FC<Props> = ({ seletorView, tema, botoes }) => {
     };
 
     return (
-            <>
-                <nav className={tema}>
-                    <div className="nav-wrapper">
-                        <a className="brand-logo"> WB </a>
-                        <a data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>  {/* icon menu lateral em telas pequenas */}
-                        <ul className="right hide-on-med-and-down">
-                            {gerarListaBotoes()} {/* chama método para gerar os botões na barra de navegação */}
-                        </ul>
-                    </div>
-                </nav>
-                <ul className="sidenav" id="mobile-menu">
-                    {gerarListaBotoes()} {/* chama o método para gerar os botões no menu lateral */}
-                </ul>
-            </>
-        )
-    }
+        <>
+            <nav className="nav">
+                <a className="brand-logo">WB</a>
+                <a data-target="mobile-menu" className="sidenav-trigger">
+                    <i className="material-icons">menu</i>
+                </a>
+                <div className="nav-wrapper">
+                    <ul className="right hide-on-med-and-down">
+                        {gerarListaBotoes()}
+                    </ul>
+                </div>
+            </nav>
+            <ul className="sidenav" id="mobile-menu">
+                {gerarListaBotoes()} {/* chama o método para gerar os botões no menu lateral */}
+            </ul>
+        </>
+    )
+}
 export default BarraNavegacao;

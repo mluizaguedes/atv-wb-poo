@@ -6,7 +6,7 @@ import '../componentes.css';
 type Cliente = {
     nome: string;
     nomeSocial: string;
-    genero: string;
+    genero: string; 
     cpf: string;
     rgs: string[];
     dataCadastro: string;
@@ -55,11 +55,11 @@ const RegistroCompras: React.FC<Props> = ({ tema, clientes, atualizarClientes, v
         }
     };
 
-    const handleClienteChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    /* const handleClienteChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const { value } = event.target;
         const clienteSelecionado = clientes.find(cliente => cliente.cpf === value) || null;
         setClienteSelecionado(clienteSelecionado);
-    };
+    }; */
 
     const handleBuscarCliente = () => {
         const clienteSelecionado = clientes.find(cliente => cliente.cpf === cpfInput) || null;
@@ -69,7 +69,7 @@ const RegistroCompras: React.FC<Props> = ({ tema, clientes, atualizarClientes, v
     return (
         <div>
             <h3 className="page-title"> World Beauty </h3>
-        <div className={tema}>
+        <div className="selecionado">
             <h4>Registrar Compras</h4>
             <div className="input-field">
                 <input

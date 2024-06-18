@@ -4,33 +4,60 @@ type Props = {
     tema: string
 }
 
-type NovoCliente = {
+type Cliente = {
     nome: string;
     nomeSocial: string;
     genero: string;
     cpf: string;
-    rg: string;
-    telefone: string;
+    rgs: string[];
+    telefones: string[];
 };
 
 const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
-    const [novoCliente, setNovoCliente] = useState<NovoCliente>
+    const [novoCliente, setNovoCliente] = useState<Cliente>
         ({
             nome: "",
             nomeSocial: "",
             genero: "",
             cpf: "",
-            rg: "",
-            telefone: ""
+            rgs: [""],
+            telefones: [""]
         });
     const [mensagemSucesso, setMensagemSucesso] = useState<string | null>(null);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target;
-        setNovoCliente(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>, index: number, field: keyof Cliente) => {
+        const { value } = event.target;
+        if (field === "rgs" || field === "telefones") {
+            const updatedArray = [...novoCliente[field]];
+            updatedArray[index] = value;
+            setNovoCliente({
+                ...novoCliente,
+                [field]: updatedArray
+            });
+        } else {
+            setNovoCliente({
+                ...novoCliente,
+                [field]: value
+            });
+        }
+    };
+
+    const handleAddField = (field: keyof Cliente) => {
+        if (field === "rgs" || field === "telefones") {
+            setNovoCliente({
+                ...novoCliente,
+                [field]: [...novoCliente[field], ""]
+            });
+        }
+    };
+
+    const handleRemoveField = (index: number, field: keyof Cliente) => {
+        if (field === "rgs" || field === "telefones") {
+            setNovoCliente({
+                ...novoCliente,
+                [field]: novoCliente[field].filter((_: string, i: number) => i !== index)
+            });
+        }
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -44,8 +71,8 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
             nomeSocial: "",
             genero: "",
             cpf: "",
-            rg: "",
-            telefone: ""
+            rgs: [""],
+            telefones: [""]
         });
     };
 
@@ -67,7 +94,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                     className="validate"
                                     name="nome"
                                     value={novoCliente.nome}
-                                    onChange={handleChange}
+                                    onChange={(e) => handleChange(e, 0, "nome")}
                                 />
                                 <label htmlFor="nome">Nome completo</label>
                             </div>
@@ -78,7 +105,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                     className="validate"
                                     name="nomeSocial"
                                     value={novoCliente.nomeSocial}
-                                    onChange={handleChange}
+                                    onChange={(e) => handleChange(e, 0, "nomeSocial")}
                                 />
                                 <label htmlFor="nome_social">Nome social</label>
                             </div>
@@ -91,7 +118,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                     className="validate"
                                     name="genero"
                                     value={novoCliente.genero}
-                                    onChange={handleChange}
+                                    onChange={(e) => handleChange(e, 0, "genero")}
                                 />
                                 <label htmlFor="genero">Gênero</label>
                             </div>
@@ -102,47 +129,57 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                     className="validate"
                                     name="cpf"
                                     value={novoCliente.cpf}
-                                    onChange={handleChange}
+                                    onChange={(e) => handleChange(e, 0, "cpf")}
                                 />
                                 <label htmlFor="cpf">CPF</label>
                             </div>
                         </div>
                         <div className="row">
-                            <div className="input-field col s6">
-                                <input
-                                    id="rg"
-                                    type="text"
-                                    className="validate"
-                                    name="rg"
-                                    value={novoCliente.rg}
-                                    onChange={handleChange}
-                                />
-                                <label htmlFor="rg">RG</label>
-                            </div>
-                            <div className="input-field col s6">
-                                <input
-                                    id="telefone"
-                                    type="text"
-                                    className="validate"
-                                    name="telefone"
-                                    value={novoCliente.telefone}
-                                    onChange={handleChange}
-                                />
-                                <label htmlFor="telefone">Telefone</label>
-                            </div>
+                            {novoCliente.rgs.map((rg, index) => (
+                                <div className="input-field col s6" key={index}>
+                                    <input
+                                        id={`rg-${index}`}
+                                        type="text"
+                                        className="validate"
+                                        name={`rg-${index}`}
+                                        value={rg}
+                                        onChange={(e) => handleChange(e, index, "rgs")}
+                                    />
+                                    <label htmlFor={`rg-${index}`}>RG {index + 1}</label>
+                                    <button type="button" className="btn red" onClick={() => handleRemoveField(index, "rgs")}>Remover</button>
+                                </div>
+                            ))}
+                            <button type="button" className="btn" onClick={() => handleAddField("rgs")}>Adicionar RG</button>
                         </div>
                         <div className="row">
-                            <div className="col s12">
-                                <button className={estiloBotao} type="submit" name="action">Cadastrar
+                            {novoCliente.telefones.map((telefone, index) => (
+                                <div className="input-field col s6" key={index}>
+                                    <input
+                                        id={`telefone-${index}`}
+                                        type="text"
+                                        className="validate"
+                                        name={`telefone-${index}`}
+                                        value={telefone}
+                                        onChange={(e) => handleChange(e, index, "telefones")}
+                                    />
+                                    <label htmlFor={`telefone-${index}`}>Telefone {index + 1}</label>
+                                    <button type="button" className="btn red" onClick={() => handleRemoveField(index, "telefones")}>Remover</button>
+                                </div>
+                            ))}
+                            <button type="button" className="btn" onClick={() => handleAddField("telefones")}>Adicionar Telefone</button>
+                        </div>
+                        <div className="row">
+                            <div className="col-s12">
+                                <button className="button" type="submit" name="action">Cadastrar
                                     <i className="material-icons right">send</i>
                                 </button>
+                                {mensagemSucesso && <p>{mensagemSucesso}</p>}
                             </div>
                         </div>
                     </div>
-                    {mensagemSucesso && <p>{mensagemSucesso}</p>}
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};
 export default FormularioCadastroCliente;
