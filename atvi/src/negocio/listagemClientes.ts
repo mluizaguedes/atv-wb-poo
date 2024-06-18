@@ -10,8 +10,8 @@ export default class ListagemClientes extends Listagem {
   }
 
   public listar(): void {
-    const feminino = this.clientes.filter((cliente) => cliente.genero === "F");
-    const masculino = this.clientes.filter((cliente) => cliente.genero === "M");
+    const feminino = this.clientes.filter((cliente) => cliente.genero.toLowerCase() === 'f');
+    const masculino = this.clientes.filter((cliente) => cliente.genero.toLowerCase() === 'm');
 
     console.log(`\nLista de clientes do sexo FEMININO`);
     feminino.forEach((cliente) => {

@@ -14,6 +14,19 @@ export default class UpdateClientes extends Update {
         this.entrada = new Entrada()
     }
 
+    private listarTelefones(cliente: Cliente): void {
+        console.log(`\nTelefones do cliente:`);
+        cliente.getTelefones.forEach((telefone, index) => {
+            console.log(`${index} - (${telefone.ddd}) ${telefone.numero}`);
+        });
+    }
+    private listarRGs(cliente: Cliente): void {
+        console.log(`\nRG(s) do cliente:`);
+        cliente.getRgs.forEach((RG, index) => {
+            console.log(`${index} - ${RG.valor}/${RG.uf}`);
+        });
+    }
+
     public atualizar(): void {
         console.log(`\nAtualizar cliente`);
 
@@ -30,7 +43,7 @@ export default class UpdateClientes extends Update {
             clienteExistente.genero = genero;
 
             if (clienteExistente.getRgs.length > 0) {
-                let addMoreRG = this.entrada.receberTexto(`O cliente já possui RG cadastrado. Deseja adicionar mais um? (s/n): `);
+                let addMoreRG = this.entrada.receberTexto(`O cliente já possui RG(s) cadastrado. Deseja adicionar mais um? (s/n): `);
                 if (addMoreRG.toLowerCase() === 's') {
                     let valorRG = this.entrada.receberTexto(`Por favor informe o número do RG: `);
                     let dataRG = this.entrada.receberTexto(`Por favor informe a data de emissão do RG, no padrão dd/mm/yyyy: `);
@@ -40,18 +53,55 @@ export default class UpdateClientes extends Update {
                     clienteExistente.getRgs.push(novoRG);
                     console.log(`Novo RG adicionado com sucesso.`);
                 }
+
+                let excluirRG = this.entrada.receberTexto(`O cliente já possui RG(s) cadastrado. Deseja excluir algum? (s/n): `);
+                if (excluirRG.toLowerCase() === 's') {
+                    let continuarExcluindo = true;
+                    while (continuarExcluindo) {
+                        this.listarRGs(clienteExistente);
+                        let indiceRG = parseInt(this.entrada.receberTexto(`Informe o índice do RG que deseja excluir: `));
+                        if (indiceRG >= 0 && indiceRG < clienteExistente.getRgs.length) {
+                            clienteExistente.getRgs.splice(indiceRG, 1);
+                            console.log(`RG excluído com sucesso.`);
+                        } else {
+                            console.log(`Índice inválido.`);
+                        }
+                        continuarExcluindo = this.entrada.receberTexto(`Deseja excluir outro RG? (s/n): `).toLowerCase() === 's';
+                    }
+                }
             }
 
             if (clienteExistente.getTelefones.length > 0) {
-                let addMoreTelefone = this.entrada.receberTexto(`O cliente já possui telefone(s) cadastrado(s). Deseja adicionar mais um? (s/n): `);
-                if (addMoreTelefone.toLowerCase() === 's') {
-                    let ddd = this.entrada.receberTexto(`Por favor informe o DDD do telefone: `);
-                    let numero = this.entrada.receberTexto(`Por favor informe o número do telefone: `);
-                    let novoTelefone = new Telefone(ddd, numero);
 
-                    clienteExistente.getTelefones.push(novoTelefone);
-                    console.log(`Novo telefone adicionado com sucesso.`);
+                let editTelefone = this.entrada.receberTexto(`O cliente possui telefone(s) cadastrado(s). Deseja EDITAR algum? (s/n): `);
+                if (editTelefone.toLowerCase() === 's') {
+                    let continuarEditando = true;
+                    while (continuarEditando) {
+                        this.listarTelefones(clienteExistente);
+                        let indiceTelefone = parseInt(this.entrada.receberTexto(`Informe o índice do telefone que deseja editar: `));
+                        if (indiceTelefone >= 0 && indiceTelefone < clienteExistente.getTelefones.length) {
+                            let telefone = clienteExistente.getTelefones[indiceTelefone];
+                            let novoDDD = this.entrada.receberTexto(`Novo DDD do telefone (${telefone.ddd}): `) || telefone.ddd;
+                            let novoNumero = this.entrada.receberTexto(`Novo número do telefone (${telefone.numero}): `) || telefone.numero;
+                            telefone.ddd = novoDDD;
+                            telefone.numero = novoNumero;
+                            console.log(`Telefone atualizado com sucesso.`);
+                        } else {
+                            console.log(`Índice inválido.`);
+                        }
+                        continuarEditando = this.entrada.receberTexto(`Deseja EDITAR outro telefone? (s/n): `).toLowerCase() === 's';
+                    }
                 }
+
+            }
+            let addMoreTelefone = this.entrada.receberTexto(`Deseja ADICIONAR um número de telefone? (s/n): `);
+            if (addMoreTelefone.toLowerCase() === 's') {
+                let ddd = this.entrada.receberTexto(`Por favor informe o DDD do telefone: `);
+                let numero = this.entrada.receberTexto(`Por favor informe o número do telefone: `);
+                let novoTelefone = new Telefone(ddd, numero);
+
+                clienteExistente.getTelefones.push(novoTelefone);
+                console.log(`Novo telefone adicionado com sucesso.`);
             }
 
         console.log(`\nCliente atualizado com sucesso :)\n`);

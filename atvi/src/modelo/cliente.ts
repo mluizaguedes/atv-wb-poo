@@ -47,6 +47,7 @@ export default class Cliente {
   public get getTelefones(): Array<Telefone> {
     return this.telefones;
   }
+
   public get getProdutosConsumidos(): Array<Produto> {
     return this.produtosConsumidos;
   }
@@ -57,19 +58,15 @@ export default class Cliente {
   public adicionarProdutoConsumido(produto: Produto): void {
     this.produtosConsumidos.push(produto);
   }
-
   public adicionarServicoConsumido(servico: Servico): void {
     this.servicosConsumidos.push(servico);
   }
-
   public quantidadeProdutosConsumidos(): number {
     return this.produtosConsumidos.length;
   }
-
   public quantidadeServiçosConsumidos(): number {
     return this.servicosConsumidos.length;
   }
-
   public quantidadeConsumo(): number {
     return this.quantidadeProdutosConsumidos() + this.quantidadeServiçosConsumidos();
   }
