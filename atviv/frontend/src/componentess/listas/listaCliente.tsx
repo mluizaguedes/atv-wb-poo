@@ -133,12 +133,21 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
                         <div className="table.responsive-table">
                             {clienteSelecionado && !editando && (
                                 <div className="selecionado">
-                                    <h3>{clienteSelecionado.nome}</h3>
+                                    <h3>{clienteSelecionado.nome + " " + clienteSelecionado.sobreNome}</h3>
+                                    <p><strong>Email:</strong> {clienteSelecionado.email}</p>
                                     <p><strong>Telefone(s):</strong> {clienteSelecionado.telefones.join(", ")}</p>
+                                    <p><strong>Código Postal:</strong> {clienteSelecionado.endereco.codigoPostal}</p>
+                                    <p><strong>Código Postal:</strong> {clienteSelecionado.endereco.codigoPostal}</p>
+                                    <p><strong>Rua:</strong> {clienteSelecionado.endereco.rua}</p>
+                                    <p><strong>Número:</strong> {clienteSelecionado.endereco.numero}</p>
+                                    <p><strong>Bairro:</strong> {clienteSelecionado.endereco.bairro}</p>
+                                    <p><strong>Cidade:</strong> {clienteSelecionado.endereco.cidade}</p>
+                                    <p><strong>Estado:</strong> {clienteSelecionado.endereco.estado}</p>
+                                    <p><strong>Info:</strong> {clienteSelecionado.endereco.informacoesAdicionais}</p>
                                     <button onClick={fechar} className="btn">Fechar</button>
                                     <button onClick={editar} className="btn">Editar</button>
                                     <button onClick={excluir} className="btn red">Excluir Cliente</button>
-                                    <button onClick={mostrarRegistroConsumoHandler} className="btn">Registrar Consumo</button>
+                                    
                                 </div>
                             )}
 
@@ -198,7 +207,6 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
                 </div>
             ) : (
                 <div>
-                    {/* Componente para registro de consumo */}
                     <button onClick={voltar} className="btn">Voltar</button>
                 </div>
             )}

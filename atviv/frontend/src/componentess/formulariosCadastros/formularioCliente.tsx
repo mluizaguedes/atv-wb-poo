@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../componentes.css';
 
 type Props = {
     tema: string;
@@ -139,11 +140,32 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                 value={cliente.nome}
                                 onChange={(e) => handleChange(e, 'nome')}
                             />
-                            <label htmlFor="nome">Nome completo</label>
+                            <label htmlFor="nome">Nome</label>
+                        </div>
+                        <div className="input-field col s6">
+                            <input
+                                id="sobreNome"
+                                type="text"
+                                className="validate"
+                                name="sobreNome"
+                                value={cliente.sobreNome}
+                                onChange={(e) => handleChange(e, 'sobreNome')}
+                            />
+                            <label htmlFor="sobreNome">Sobrenome</label>
                         </div>
                     </div>
-                    {/* Add other fields here similar to the 'nome' field */}
                     <div className="row">
+                        <div className="input-field col s6">
+                            <input
+                                id="email"
+                                type="email"
+                                className="validate"
+                                name="email"
+                                value={cliente.email}
+                                onChange={(e) => handleChange(e, 'email')}
+                            />
+                            <label htmlFor="email">Email</label>
+                        </div>
                         <div className="input-field col s6">
                             <input
                                 id="telefone"
@@ -156,8 +178,93 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                         </div>
                     </div>
                     <div className="row">
+                        <div className="input-field col s6">
+                            <input
+                                id="codigoPostal"
+                                type="text"
+                                className="validate"
+                                name="codigoPostal"
+                                value={cliente.endereco.codigoPostal}
+                                onChange={(e) => handleChange(e, 'codigoPostal')}
+                            />
+                            <label htmlFor="codigoPostal">Código Postal</label>
+                        </div>
+                        <div className="input-field col s6">
+                            <input
+                                id="rua"
+                                type="text"
+                                className="validate"
+                                name="rua"
+                                value={cliente.endereco.rua}
+                                onChange={(e) => handleChange(e, 'rua')}
+                            />
+                            <label htmlFor="rua">Rua</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="input-field col s6">
+                            <input
+                                id="numero"
+                                type="text"
+                                className="validate"
+                                name="numero"
+                                value={cliente.endereco.numero}
+                                onChange={(e) => handleChange(e, 'numero')}
+                            />
+                            <label htmlFor="numero">Número</label>
+                        </div>
+                        <div className="input-field col s6">
+                            <input
+                                id="bairro"
+                                type="text"
+                                className="validate"
+                                name="bairro"
+                                value={cliente.endereco.bairro}
+                                onChange={(e) => handleChange(e, 'bairro')}
+                            />
+                            <label htmlFor="bairro">Bairro</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="input-field col s6">
+                            <input
+                                id="cidade"
+                                type="text"
+                                className="validate"
+                                name="cidade"
+                                value={cliente.endereco.cidade}
+                                onChange={(e) => handleChange(e, 'cidade')}
+                            />
+                            <label htmlFor="cidade">Cidade</label>
+                        </div>
+                        <div className="input-field col s6">
+                            <input
+                                id="estado"
+                                type="text"
+                                className="validate"
+                                name="estado"
+                                value={cliente.endereco.estado}
+                                onChange={(e) => handleChange(e, 'estado')}
+                            />
+                            <label htmlFor="estado">Estado</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="input-field col s12">
+                            <input
+                                id="informacoesAdicionais"
+                                type="text"
+                                className="validate"
+                                name="informacoesAdicionais"
+                                value={cliente.endereco.informacoesAdicionais}
+                                onChange={(e) => handleChange(e, 'informacoesAdicionais')}
+                            />
+                            <label htmlFor="informacoesAdicionais">Informações Adicionais</label>
+                        </div>
+                    </div>
+                    <div className="row">
                         <div className="col s12">
-                            <button className={estiloBotao} type="submit" name="action" disabled={isSubmitting}>Cadastrar
+                            <button className="button" type="submit" name="action" disabled={isSubmitting}>Cadastrar
                                 <i className="material-icons right">send</i>
                             </button>
                             {mensagemSucesso && <p>{mensagemSucesso}</p>}

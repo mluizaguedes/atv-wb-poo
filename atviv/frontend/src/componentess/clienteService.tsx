@@ -1,4 +1,23 @@
-/* export const getClientes = async (): Promise<Cliente[]> => {
+type Endereco = {
+    codigoPostal: string;
+    rua: string;
+    numero: string;
+    bairro: string;
+    cidade: string;
+    estado: string;
+    informacoesAdicionais: string;
+}
+
+type Cliente = {
+    id: number;
+    nome: string;
+    sobreNome: string;
+    email: string;
+    endereco: Endereco;
+    telefones: string[];
+};
+
+export const getClientes = async (): Promise<Cliente[]> => {
     const response = await fetch('http://localhost:32832/clientes');
     return response.json();
 };
@@ -37,4 +56,3 @@ export const excluirCliente = async (id: number): Promise<void> => {
         body: JSON.stringify({ id })
     });
 };
- */
