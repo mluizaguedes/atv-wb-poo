@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import 'materialize-css/dist/css/materialize.min.css'
 import '../componentes.css';
+import { getClientes, getCliente, atualizarCliente, cadastrarCliente, excluirCliente } from '../clienteService';
 
 type Props = {
     tema: string
@@ -44,17 +45,205 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
             },
             telefones: ["(12) 98765-4321"],
         },
+        {
+            "id": 2,
+            "nome": "João",
+            "sobreNome": "Pereira",
+            "email": "joao@gmail.com",
+            "endereco": {
+                "codigoPostal": "13045-000",
+                "rua": "Avenida Principal",
+                "numero": "456",
+                "bairro": "Vila Nova",
+                "cidade": "Campinas",
+                "estado": "São Paulo",
+                "informacoesAdicionais": "Casa 5"
+            },
+            "telefones": ["(19) 99876-5432"]
+        },
+        {
+            "id": 3,
+            "nome": "Ana",
+            "sobreNome": "Costa",
+            "email": "ana@gmail.com",
+            "endereco": {
+                "codigoPostal": "12345-678",
+                "rua": "Rua das Flores",
+                "numero": "789",
+                "bairro": "Jardim das Rosas",
+                "cidade": "São Paulo",
+                "estado": "São Paulo",
+                "informacoesAdicionais": "Apartamento 303"
+            },
+            "telefones": ["(11) 91234-5678"]
+        },
+        {
+            "id": 4,
+            "nome": "Carlos",
+            "sobreNome": "Mendes",
+            "email": "carlos@gmail.com",
+            "endereco": {
+                "codigoPostal": "45678-910",
+                "rua": "Rua dos Pinheiros",
+                "numero": "321",
+                "bairro": "Jardim América",
+                "cidade": "Rio de Janeiro",
+                "estado": "Rio de Janeiro",
+                "informacoesAdicionais": "Casa 2"
+            },
+            "telefones": ["(21) 99876-5432"]
+        },
+        {
+            "id": 5,
+            "nome": "Fernanda",
+            "sobreNome": "Oliveira",
+            "email": "fernanda@gmail.com",
+            "endereco": {
+                "codigoPostal": "98765-432",
+                "rua": "Rua do Sol",
+                "numero": "654",
+                "bairro": "Centro",
+                "cidade": "Belo Horizonte",
+                "estado": "Minas Gerais",
+                "informacoesAdicionais": "Apartamento 202"
+            },
+            "telefones": ["(31) 91234-5678"]
+        },
+        {
+            "id": 6,
+            "nome": "Lucas",
+            "sobreNome": "Almeida",
+            "email": "lucas@gmail.com",
+            "endereco": {
+                "codigoPostal": "54321-098",
+                "rua": "Rua das Estrelas",
+                "numero": "987",
+                "bairro": "Bairro Alto",
+                "cidade": "Curitiba",
+                "estado": "Paraná",
+                "informacoesAdicionais": "Casa 10"
+            },
+            "telefones": ["(41) 99876-5432"]
+        },
+        {
+            "id": 7,
+            "nome": "Patricia",
+            "sobreNome": "Gomes",
+            "email": "patricia@gmail.com",
+            "endereco": {
+                "codigoPostal": "67890-123",
+                "rua": "Rua da Lua",
+                "numero": "123",
+                "bairro": "Centro",
+                "cidade": "Porto Alegre",
+                "estado": "Rio Grande do Sul",
+                "informacoesAdicionais": "Apartamento 305"
+            },
+            "telefones": ["(51) 91234-5678"]
+        },
+        {
+            "id": 8,
+            "nome": "Ricardo",
+            "sobreNome": "Ferreira",
+            "email": "ricardo@gmail.com",
+            "endereco": {
+                "codigoPostal": "12345-678",
+                "rua": "Rua do Mar",
+                "numero": "456",
+                "bairro": "Centro",
+                "cidade": "Florianópolis",
+                "estado": "Santa Catarina",
+                "informacoesAdicionais": "Casa 8"
+            },
+            "telefones": ["(48) 99876-5432"]
+        },
+        {
+            "id": 9,
+            "nome": "Mariana",
+            "sobreNome": "Souza",
+            "email": "mariana@gmail.com",
+            "endereco": {
+                "codigoPostal": "87654-321",
+                "rua": "Rua das Nuvens",
+                "numero": "789",
+                "bairro": "Jardim Celeste",
+                "cidade": "Fortaleza",
+                "estado": "Ceará",
+                "informacoesAdicionais": "Apartamento 405"
+            },
+            "telefones": ["(85) 91234-5678"]
+        },
+        {
+            "id": 10,
+            "nome": "Eduardo",
+            "sobreNome": "Ribeiro",
+            "email": "eduardo@gmail.com",
+            "endereco": {
+                "codigoPostal": "23456-789",
+                "rua": "Rua do Vento",
+                "numero": "321",
+                "bairro": "Centro",
+                "cidade": "Salvador",
+                "estado": "Bahia",
+                "informacoesAdicionais": "Casa 12"
+            },
+            "telefones": ["(71) 99876-5432"]
+        },
+        {
+            "id": 11,
+            "nome": "Beatriz",
+            "sobreNome": "Nascimento",
+            "email": "beatriz@gmail.com",
+            "endereco": {
+                "codigoPostal": "54321-876",
+                "rua": "Rua do Horizonte",
+                "numero": "654",
+                "bairro": "Centro",
+                "cidade": "Recife",
+                "estado": "Pernambuco",
+                "informacoesAdicionais": "Apartamento 101"
+            },
+            "telefones": ["(81) 91234-5678"]
+        }, 
     ]);
+
+    useEffect(() => {
+        const fetchClientes = async () => {
+            const clientes = await getClientes();
+            setClientes(clientes);
+        };
+        fetchClientes();
+    }, []);
 
     const [clienteSelecionado, setClienteSelecionado] = useState<Cliente | null>(null);
     const [editando, setEditando] = useState(false);
     const [clienteEditado, setClienteEditado] = useState<Cliente | null>(null);
     const [mostrarRegistroConsumo, setMostrarRegistroConsumo] = useState(false);
 
-    const clienteSelecionadoHandler = (cliente: Cliente) => {
-        setClienteSelecionado(cliente);
+    const clienteSelecionadoHandler = async (cliente: Cliente) => {
+        const clienteDetalhado = await getCliente(cliente.id);
+        setClienteSelecionado(clienteDetalhado);
         setEditando(false);
-        setClienteEditado(cliente);
+        setClienteEditado(clienteDetalhado);
+    };
+    
+    const salvar = async () => {
+        if (clienteSelecionado && clienteEditado) {
+            await atualizarCliente(clienteEditado);
+            const novosClientes = clientes.map(c => c.id === clienteEditado.id ? clienteEditado : c);
+            setClientes(novosClientes);
+            setClienteSelecionado(clienteEditado);
+            setEditando(false);
+        }
+    };
+    
+    const excluir = async () => {
+        if (clienteSelecionado) {
+            await excluirCliente(clienteSelecionado.id);
+            const novosClientes = clientes.filter(cliente => cliente.id !== clienteSelecionado.id);
+            setClientes(novosClientes);
+            setClienteSelecionado(null);
+        }
     };
 
     const fechar = () => {
@@ -63,27 +252,6 @@ const ListaCliente: React.FC<Props> = ({ tema }) => {
 
     const editar = () => {
         setEditando(true);
-    };
-
-    const excluir = () => {
-        if (clienteSelecionado) {
-            const novoArrayClientes = clientes.filter(cliente => cliente.id !== clienteSelecionado.id);
-            setClientes(novoArrayClientes);
-            setClienteSelecionado(null);
-        }
-    };
-
-    const salvar = () => {
-        if (clienteSelecionado && clienteEditado) {
-            const index = clientes.findIndex(cliente => cliente.id === clienteSelecionado.id);
-            if (index !== -1) {
-                const novosClientes = [...clientes];
-                novosClientes[index] = clienteEditado;
-                setClientes(novosClientes);
-                setClienteSelecionado(clienteEditado);
-                setEditando(false);
-            }
-        }
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

@@ -1,4 +1,4 @@
-type Endereco = {
+export type Endereco = {
     codigoPostal: string;
     rua: string;
     numero: string;
@@ -6,9 +6,9 @@ type Endereco = {
     cidade: string;
     estado: string;
     informacoesAdicionais: string;
-}
+};
 
-type Cliente = {
+export type Cliente = {
     id: number;
     nome: string;
     sobreNome: string;
@@ -23,7 +23,7 @@ export const getClientes = async (): Promise<Cliente[]> => {
 };
 
 export const getCliente = async (id: number): Promise<Cliente> => {
-    const response = await fetch('http://localhost:32832/cliente/${id}');
+    const response = await fetch(`http://localhost:32832/cliente/${id}`);
     return response.json();
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import '../componentes.css';
+import { cadastrarCliente } from '../clienteService';
 
 type Props = {
     tema: string;
@@ -16,6 +17,7 @@ type Endereco = {
 }
 
 type Cliente = {
+    id: number;
     nome: string;
     sobreNome: string; 
     email: string; 
@@ -25,6 +27,7 @@ type Cliente = {
 
 const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
     const [cliente, setCliente] = useState<Cliente>({
+        id: 0,
         nome: '',
         sobreNome: '', 
         email: '', 
@@ -43,10 +46,9 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
     const [mensagemErro, setMensagemErro] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>, field: keyof Cliente | keyof Endereco) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        
-        if (field in cliente.endereco) {
+        if (name in cliente.endereco) {
             setCliente({
                 ...cliente,
                 endereco: {
@@ -70,49 +72,46 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (!cliente.nome || cliente.telefones.length === 0) {
+    
+        if (!cliente.nome || 
+            !cliente.sobreNome || 
+            !cliente.email || 
+            !cliente.endereco || 
+            !cliente.endereco.codigoPostal || 
+            !cliente.endereco.rua || 
+            !cliente.endereco.numero || 
+            !cliente.endereco.bairro || 
+            !cliente.endereco.cidade || 
+            !cliente.endereco.estado || 
+            cliente.telefones.length === 0) {
+            
             setMensagemErro('Todos os campos obrigatórios devem ser preenchidos.');
             setMensagemSucesso(null);
             return;
         }
-
+    
         setIsSubmitting(true);
-
+    
         try {
-            console.log('Enviando dados do cliente:', JSON.stringify(cliente, null, 2));
-
-            const response = await fetch('http://localhost:32832/cliente/cadastrar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
+            await cadastrarCliente(cliente);
+            setMensagemSucesso('Cliente cadastrado com sucesso!');
+            setMensagemErro(null);
+            setCliente({
+                id: 0,
+                nome: '',
+                sobreNome: '', 
+                email: '', 
+                endereco: { 
+                    codigoPostal: '',
+                    rua: '',
+                    numero: '',
+                    bairro: '',
+                    cidade: '',
+                    estado: '',
+                    informacoesAdicionais: '',
                 },
-                body: JSON.stringify(cliente),
+                telefones: []
             });
-
-            if (response.ok) {
-                setMensagemSucesso('Cliente cadastrado com sucesso!');
-                setMensagemErro(null);
-                setCliente({
-                    nome: '',
-                    sobreNome: '', 
-                    email: '', 
-                    endereco: { 
-                        codigoPostal: '',
-                        rua: '',
-                        numero: '',
-                        bairro: '',
-                        cidade: '',
-                        estado: '',
-                        informacoesAdicionais: '',
-                    },
-                    telefones: []
-                });
-            } else {
-                const errorData = await response.json();
-                console.error('Erro ao cadastrar cliente:', errorData);
-                setMensagemErro(`Erro ao cadastrar cliente: ${errorData.message}`);
-                setMensagemSucesso(null);
-            }
         } catch (error) {
             console.error('Erro na requisição:', error);
             setMensagemErro('Erro ao cadastrar cliente.');
@@ -122,11 +121,9 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
         }
     };
 
-    let estiloBotao = `btn waves-effect waves-light ${tema}`;
-
     return (
         <div>
-            <h3 className="page-title"> World Beauty </h3>
+            <h3 className="page-title">World Beauty</h3>
             <div className="row">
                 <form className="col s12" onSubmit={handleSubmit}>
                     <h4>Cadastrar Cliente</h4>
@@ -138,7 +135,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                 className="validate"
                                 name="nome"
                                 value={cliente.nome}
-                                onChange={(e) => handleChange(e, 'nome')}
+                                onChange={handleChange}
                             />
                             <label htmlFor="nome">Nome</label>
                         </div>
@@ -149,7 +146,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                 className="validate"
                                 name="sobreNome"
                                 value={cliente.sobreNome}
-                                onChange={(e) => handleChange(e, 'sobreNome')}
+                                onChange={handleChange}
                             />
                             <label htmlFor="sobreNome">Sobrenome</label>
                         </div>
@@ -162,7 +159,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                 className="validate"
                                 name="email"
                                 value={cliente.email}
-                                onChange={(e) => handleChange(e, 'email')}
+                                onChange={handleChange}
                             />
                             <label htmlFor="email">Email</label>
                         </div>
@@ -185,7 +182,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                 className="validate"
                                 name="codigoPostal"
                                 value={cliente.endereco.codigoPostal}
-                                onChange={(e) => handleChange(e, 'codigoPostal')}
+                                onChange={handleChange}
                             />
                             <label htmlFor="codigoPostal">Código Postal</label>
                         </div>
@@ -196,7 +193,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                 className="validate"
                                 name="rua"
                                 value={cliente.endereco.rua}
-                                onChange={(e) => handleChange(e, 'rua')}
+                                onChange={handleChange}
                             />
                             <label htmlFor="rua">Rua</label>
                         </div>
@@ -209,7 +206,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                 className="validate"
                                 name="numero"
                                 value={cliente.endereco.numero}
-                                onChange={(e) => handleChange(e, 'numero')}
+                                onChange={handleChange}
                             />
                             <label htmlFor="numero">Número</label>
                         </div>
@@ -220,7 +217,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                 className="validate"
                                 name="bairro"
                                 value={cliente.endereco.bairro}
-                                onChange={(e) => handleChange(e, 'bairro')}
+                                onChange={handleChange}
                             />
                             <label htmlFor="bairro">Bairro</label>
                         </div>
@@ -233,7 +230,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                 className="validate"
                                 name="cidade"
                                 value={cliente.endereco.cidade}
-                                onChange={(e) => handleChange(e, 'cidade')}
+                                onChange={handleChange}
                             />
                             <label htmlFor="cidade">Cidade</label>
                         </div>
@@ -244,7 +241,7 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                 className="validate"
                                 name="estado"
                                 value={cliente.endereco.estado}
-                                onChange={(e) => handleChange(e, 'estado')}
+                                onChange={handleChange}
                             />
                             <label htmlFor="estado">Estado</label>
                         </div>
@@ -257,8 +254,8 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
                                 className="validate"
                                 name="informacoesAdicionais"
                                 value={cliente.endereco.informacoesAdicionais}
-                                onChange={(e) => handleChange(e, 'informacoesAdicionais')}
-                            />
+                                onChange={handleChange}
+                            /> 
                             <label htmlFor="informacoesAdicionais">Informações Adicionais</label>
                         </div>
                     </div>
@@ -275,6 +272,6 @@ const FormularioCadastroCliente: React.FC<Props> = ({ tema }) => {
             </div>
         </div>
     );
-}
+};
 
 export default FormularioCadastroCliente;
